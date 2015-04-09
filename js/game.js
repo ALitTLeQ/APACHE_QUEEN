@@ -110,7 +110,7 @@ function Bullet(object) {
             this.context.clearRect(this.x - 1, this.y, imageRepository.bullet.width + 2, imageRepository.bullet.height);
         }
         else if (self === "enemyBullet") {
-            this.context.clearRect(this.x - 1, this.y - 1, imageRepository.enemyBullet.width + 2, imageRepository.enemyBullet.height + 2);
+            this.context.clearRect(this.x - 1, this.y-1, imageRepository.enemyBullet.width + 2, imageRepository.enemyBullet.height+2);
         }
 
         this.y -= this.speed;
@@ -148,8 +148,8 @@ Bullet.prototype = new Drawable();
 
 //阿帕契機體
 function Ship() {
-    this.magazine = 12;
-    this.speed = 3;
+    this.magazine = 20;
+    this.speed = 4;
     this.bulletPool = new Pool(this.magazine);
     this.bulletPool.init("bullet");
 
@@ -266,10 +266,10 @@ function Enemy() {
         this.y = y;
         this.speed = speed;
         this.speedX = 0;
-        this.speedY = speed;
+        this.speedY = speed*((rand(2,5)*40)/100);
         this.alive = true;
-        this.leftEdge = this.x - 100;
-        this.rightEdge = this.x + 100;
+        this.leftEdge = 0;
+        this.rightEdge = game.mainCanvas.width - this.width;
         this.bottomEdge = this.y + 160;
     };
 
@@ -283,7 +283,7 @@ function Enemy() {
         if (this.x <= this.leftEdge) {
             this.speedX = this.speed;
         }
-        else if (this.x >= this.rightEdge + this.width) {
+        else if (this.x >= this.rightEdge) {
             this.speedX = -this.speed;
         }
 
@@ -703,14 +703,16 @@ function Game() {
     this.spawnWave = function () {
         var height = imageRepository.enemys[this.level].height;
         var width = imageRepository.enemys[this.level].width;
-        var x = 100;
+        var x = rand(game.mainCanvas.width*0.1,game.mainCanvas.width *0.5);
         var y = -height;
         var spacer = y * 1.5;
         for (var i = 1; i <= this.enemy_num; i++) {
             this.enemyPool.get(x, y, (game.level / 2) + 2);
-            x += width + 40;
-            if (i % 5 == 0) {
-                x = 100;
+            x += rand(width+10,width+200);
+
+            if(x>game.mainCanvas.width)
+            {
+                x = rand(game.mainCanvas.width*0.1,game.mainCanvas.width *0.6);
             }
         }
 
@@ -774,8 +776,8 @@ function animate() {
 
         //產生新的一波敵機
         if (game.enemyPool.getPool().length === 0) {
-            if (game.enemy_num < game.level + 2) {
-                game.enemy_num += 1;
+            if (game.enemy_num < game.level*4) {
+                game.enemy_num += 2;
                 game.spawnWave();
             }
             else {
@@ -785,10 +787,12 @@ function animate() {
                     imageRepository.enemy = imageRepository.enemys[game.level];
                 }
                 else {
-                    alert("No Cheating!!!");
                     game.isplaying = false;
                     game.gameOver();
-
+                    alert("Ooooooops!!");
+                    alert("You are loser..!!");
+                    alert("Why?");
+                    alert("Is it a serious problem, bro?");
                 }
 
                 game.enemy_num = game.level;
