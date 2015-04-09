@@ -1,5 +1,4 @@
 
-var game = new Game();
 $(document).keyup(keyUpFunc);
 var is_init = true;
 

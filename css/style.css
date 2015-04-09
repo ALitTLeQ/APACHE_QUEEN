@@ -24,22 +24,36 @@
 	position: relative;
 	top: 40%;
 	text-align: center;
-	height: 30%;
+	height: 35%;
 	background-color: rgba(70%,0%,0%,0.5);
 }
 #info span{
 	text-align: center;
+	font-family: 'PT Sans', sans-serif;
 }
 #info .title{
 	font-family: 'Black Ops One', cursive;
 	font-size: 60px;
     color: #F7EFF2;
+	/*text-shadow: 2px 2px #413B3B ;*/
 }
 .button{
-    font-family: 'PT Sans', sans-serif;
 	font-size: 40px;
     cursor: pointer;
-    color: #FFB405;
+    color: #FFD716;
+}
+.press{
+	color: white;
+}
+.queen{
+	display: inline-block;
+	color: #FF5D56  ;
+	text-shadow: 2px 2px #F7EFF2;
+}
+.control{
+	text-align: center;
+	margin-top: 5px;
+
 }
 .button:hover{
     color: #59AFE1 ;
